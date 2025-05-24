@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPC Flashcards – Mobile</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 10px; }
+        #flashcard {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 90%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            min-height: 200px;
+        }
+        button {
+            font-size: 16px;
+            padding: 12px 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .nav { background: #007bff; color: #fff; }
+        .toggle { background: #28a745; color: #fff; width: 90%; margin-top: 10px; }
+        h1 { font-size: 22px; }
+        h2 { font-size: 20px; margin: 10px 0; }
+        p { font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h1>IPC Flashcards</h1>
+    <div id="flashcard">
+        <h2 id="card-title">Item 1</h2>
+        <p id="card-content">Click "Show Answer" to begin.</p>
+    </div>
+    <div style="text-align: center;">
+        <button class="nav" onclick="prevCard()">← Previous</button>
+        <button class="nav" onclick="nextCard()">Next →</button><br>
+        <button class="toggle" onclick="toggleContent()">Show Answer</button>
+    </div>
+
+    <script>
+        const cards = [
+{title: "Item 1: Physical science", content: "The study of matter and energy and the interactions between them."},
+{title: "Item 2: Ampere", content: "The SI unit of electric current equal to one coulomb per second."},
+{title: "Item 3: Candela", content: "The SI base unit of luminous intensity."},
+{title: "Item 4: Kelvin", content: "The SI base unit for temperature, starting at absolute zero."},
+{title: "Item 5: Second", content: "The SI base unit of time."},
+{title: "Item 6: Conversion factor", content: "A ratio used to convert between units."},
+{title: "Item 7: Creation mandate", content: "God’s command for humans to exercise dominion over the earth through wise stewardship."},
+{title: "Item 8: Ethics", content: "Moral principles that govern behavior, including scientific research."},
+{title: "Item 9: Hypothesis", content: "A testable explanation for a scientific problem or observation."},
+{title: "Item 10: Law", content: "A statement based on repeated experimental observations that describes some aspect of the universe."},
+{title: "Item 11: Model", content: "A simplified representation used to explain or predict a phenomenon."},
+{title: "Item 12: Science", content: "The systematic study of the natural world through observation and experimentation."},
+{title: "Item 13: Theory", content: "A well-supported explanation of natural phenomena."},
+{title: "Item 14: Worldview", content: "A perspective or philosophy of life that influences how one interprets evidence."},
+{title: "Item 15: Compound", content: "A substance made of two or more elements chemically combined in fixed proportions."},
+{title: "Item 16: Mixture", content: "A combination of substances where each retains its own properties."},
+{title: "Item 17: Homogenous", content: "A mixture that is uniform in composition throughout."},
+{title: "Item 18: Heterogenous", content: "A mixture where the components are not uniformly distributed."},
+{title: "Item 19: Compound", content: "A substance composed of two or more chemically bonded elements."},
+{title: "Item 20: Element", content: "A pure substance consisting of one type of atom."},
+{title: "Item 21: Luster", content: "The way a mineral reflects light, typically metallic or non-metallic."},
+{title: "Item 22: Ductility", content: "The ability of a substance to be drawn into wires."},
+{title: "Item 23: Matter", content: "Anything that has mass and occupies space."},
+{title: "Item 24: Atom", content: "The smallest unit of an element that retains the properties of that element."},
+{title: "Item 25: Proton", content: "A positively charged particle found in the nucleus of an atom."},
+{title: "Item 26: Electron", content: "A negatively charged particle that orbits the nucleus of an atom."},
+{title: "Item 27: Neutron", content: "A subatomic particle with no charge found in the nucleus."},
+{title: "Item 28: Ion", content: "An atom or molecule with a net electric charge due to the loss or gain of electrons."},
+{title: "Item 29: Atomic number", content: "The number of protons in the nucleus of an atom."},
+{title: "Item 30: Isotope", content: "Atoms of the same element with different numbers of neutrons."},
+{title: "Item 31: Anion", content: "A negatively charged ion formed by gaining electrons."},
+{title: "Item 32: Cation", content: "A positively charged ion formed by losing electrons."},
+{title: "Item 33: Electronegativity", content: "An atom's ability to attract and hold electrons in a chemical bond."},
+{title: "Item 34: Diatomic molecules", content: "Molecules composed of two atoms of the same or different elements."},
+{title: "Item 35: Mole", content: "The SI unit for amount of substance, equal to 6.022 x 10²³ particles."},
+{title: "Item 36: Single replacement reaction", content: "A reaction where one element replaces another in a compound."},
+{title: "Item 37: Double replacement reaction", content: "A chemical reaction where two compounds exchange ions to form new compounds."},
+{title: "Item 38: Composition reaction", content: "Also called synthesis, a reaction in which simpler substances form a more complex one."},
+{title: "Item 39: Decomposition reaction", content: "A chemical reaction that breaks down a compound into simpler substances."},
+{title: "Item 40: Redox reaction", content: "A reaction involving the transfer of electrons between substances."},
+{title: "Item 41: Endothermic reaction", content: "A reaction that absorbs heat from its surroundings."},
+{title: "Item 42: Exothermic reaction", content: "A reaction that releases heat to its surroundings."},
+{title: "Item 43: Activation energy", content: "The minimum amount of energy needed to start a chemical reaction."},
+{title: "Item 44: Alpha, beta, and gamma decay", content: "Alpha releases a helium nucleus, beta emits an electron or positron, gamma releases energy as rays."},
+{title: "Item 45: Fission", content: "The splitting of a heavy nucleus into smaller nuclei with the release of energy."},
+{title: "Item 46: Fusion", content: "The combining of two light nuclei to form a heavier nucleus with the release of energy."},
+{title: "Item 47: Colloid", content: "A mixture where fine particles are suspended in another substance and do not settle out."},
+{title: "Item 48: Compound", content: "A chemical combination of two or more elements in fixed ratios."},
+{title: "Item 49: Solution", content: "A homogeneous mixture where one substance is dissolved in another."},
+{title: "Item 50: Suspension", content: "A heterogeneous mixture where particles can settle out over time."},
+{title: "Item 51: Solute", content: "The substance that is dissolved in a solution."},
+{title: "Item 52: Solvent", content: "The substance that dissolves the solute in a solution."},
+{title: "Item 53: Solubility", content: "The maximum amount of solute that can dissolve in a solvent at a specific temperature."},
+{title: "Item 54: Tyndall Effect", content: "Scattering of light by particles in a colloid or suspension."},
+{title: "Item 55: Distillation", content: "A method of separating substances based on differences in boiling points."},
+{title: "Item 56: Evaporation", content: "The process by which molecules at the surface of a liquid gain enough energy to become a gas."},
+{title: "Item 57: Filtration", content: "A method to separate solids from liquids using a filter."},
+{title: "Item 58: Magnetism", content: "A force of attraction or repulsion due to motion of electric charges."},
+{title: "Item 59: Acid, Base – define and give characteristics of each", content: "Acids donate H⁺ ions and taste sour; bases donate OH⁻ ions and feel slippery."},
+{title: "Item 60: PH Scale", content: "A scale from 0 to 14 measuring how acidic or basic a solution is, with 7 being neutral."},
+{title: "Item 61: Average speed – define and give the formula", content: "Total distance divided by total time: v = d/t."},
+{title: "Item 62: Centripetal acceleration", content: "Acceleration directed toward the center of a circular path."},
+{title: "Item 63: Acceleration", content: "The rate of change of velocity over time."},
+{title: "Item 64: Displacement", content: "The change in position of an object from its starting point."},
+{title: "Item 65: Speed", content: "The distance traveled per unit of time."},
+{title: "Item 66: Momentum", content: "The product of an object’s mass and velocity."},
+{title: "Item 67: Velocity", content: "Speed in a specific direction."},
+{title: "Item 68: Distance", content: "The total path length traveled regardless of direction."},
+{title: "Item 69: Vector", content: "A quantity that has both magnitude and direction."},
+{title: "Item 70: Force", content: "A push or pull acting on an object."},
+{title: "Item 71: Law of acceleration", content: "Newton's Second Law: Force equals mass times acceleration (F = ma)."},
+{title: "Item 72: Law of inertia", content: "Newton’s First Law: An object remains at rest or in motion unless acted on by a force."},
+{title: "Item 73: Law of action – reaction", content: "Newton’s Third Law: For every action, there is an equal and opposite reaction."},
+{title: "Item 74: Work", content: "Force applied over a distance: W = F × d."},
+{title: "Item 75: Mechanical advantage", content: "The ratio of output force to input force in a machine."},
+{title: "Item 76: Lever", content: "A rigid bar that rotates around a fulcrum to lift loads."},
+{title: "Item 77: Pulley", content: "A wheel with a groove used to change the direction of a force."},
+{title: "Item 78: Efficiency", content: "The ratio of useful work output to total work input."},
+{title: "Item 79: Power", content: "The rate at which work is done: P = W/t."},
+{title: "Item 80: Torque", content: "A twisting force that causes rotation."},
+{title: "Item 81: Inclined plane", content: "A flat surface tilted at an angle to help raise or lower objects."},
+{title: "Item 82: IMA", content: "Ideal Mechanical Advantage: input distance divided by output distance."},
+{title: "Item 83: Energy", content: "The ability to do work or cause change."},
+{title: "Item 84: Kinetic energy", content: "Energy of motion: KE = ½mv²."},
+{title: "Item 85: Mechanical energy", content: "The sum of kinetic and potential energy in a system."},
+{title: "Item 86: Potential energy", content: "Stored energy due to position or condition."},
+{title: "Item 87: Temperature", content: "A measure of the average kinetic energy of particles."},
+{title: "Item 88: Fiduciary points", content: "Standard reference points on a temperature scale, such as freezing and boiling of water."},
+{title: "Item 89: Conduction", content: "The transfer of heat through direct contact."},
+{title: "Item 90: Convection", content: "The transfer of heat by the movement of fluids."},
+{title: "Item 91: Radiation", content: "The transfer of energy through electromagnetic waves."},
+{title: "Item 92: Heat", content: "Thermal energy transferred due to temperature difference."},
+{title: "Item 93: Specific heat", content: "The amount of heat needed to raise the temperature of 1g of a substance by 1°C."},
+{title: "Item 94: Calorimeter", content: "An instrument used to measure changes in thermal energy."},
+{title: "Item 95: Caloric theory", content: "An outdated theory that heat was a fluid called caloric."},
+{title: "Item 96: Dalton’s Law", content: "The total pressure of a mixture of gases is the sum of the partial pressures."},
+{title: "Item 97: Charles Law", content: "At constant pressure, gas volume increases with temperature (V₁/T₁ = V₂/T₂)."},
+{title: "Item 98: Boyle’s Law", content: "At constant temperature, gas pressure is inversely related to volume (P₁V₁ = P₂V₂)."},
+{title: "Item 99: Gay-Lussac’s Law", content: "At constant volume, pressure of a gas is directly proportional to temperature."},
+{title: "Item 100: Pascal’s principle", content: "A pressure change at any point in a confined fluid is transmitted equally throughout."},
+{title: "Item 101: Bernoulli’s Principle", content: "As the speed of a fluid increases, its pressure decreases."},
+{title: "Item 102: Buoyancy", content: "The upward force exerted by a fluid on a submerged object."},
+{title: "Item 103: 143. JJ Thompson", content: "Discovered the electron and proposed the plum pudding model of the atom."},
+{title: "Item 104: 144. John Dalton", content: "Formulated the modern atomic theory and proposed that all matter is made of indivisible atoms."},
+{title: "Item 105: 145. Niels Bohr", content: "Developed the planetary model of the atom with electrons in energy levels."},
+{title: "Item 106: 146. Democritus", content: "Ancient Greek philosopher who first proposed that matter is composed of tiny, indivisible particles called atoms."},
+{title: "Item 107: 147. Ernest Rutherford", content: "Discovered the nucleus through the gold foil experiment and proposed the nuclear model of the atom."},
+{title: "Item 108: 148. Hantaro Nagaoka", content: "Proposed an early model of the atom with electrons orbiting a massive nucleus, similar to Saturn's rings."},
+{title: "Item 109: 149. Antoine Lavoisier", content: "Known as the father of modern chemistry; formulated the Law of Conservation of Mass."},
+{title: "Item 110: 150. Dmitri Mendeleev", content: "Created the first periodic table and arranged elements by increasing atomic mass."},
+{title: "Item 111: 151. Jacob Berzelius", content: "Developed the modern system of chemical symbols and determined atomic weights of elements."},
+{title: "Item 112: 152. Johann Dobereiner", content: "Discovered triads, groups of three elements with similar properties and progressive weights."},
+{title: "Item 113: 153. John Newlands", content: "Proposed the Law of Octaves, noting repeating patterns of properties every eight elements."},
+{title: "Item 114: 154. Robert Boyle", content: "Defined the concept of elements and formulated Boyle’s Law relating gas pressure and volume."},
+{title: "Item 115: 155. What is the speed of a racecar in meters per second that is traveling at 165 kph?", content: "To convert 165 kilometers per hour to meters per second, multiply by 1000 (to convert km to meters) and divide by 3600 (to convert hours to seconds):<br>Speed = 165 km/h × (1000 m / 1 km) ÷ (3600 s / 1 h) = 165,000 m / 3600 s = 45.83 m/s"},
+{title: "Item 116: 156. A sample of lead has a volume of 42.5 mL and a mass of 481.95g. Calculate the density.", content: "Density is calculated using the formula Density = Mass / Volume.<br>Density = 481.95 g ÷ 42.5 mL = 11.34 g/mL"},
+{title: "Item 117: 157. What is the correct electron dot notation for calcium?", content: "Calcium has two valence electrons, so we place two dots around the chemical symbol: Ca••"},
+{title: "Item 118: 158. Draw the Lewis structure for ammonia", content: "Ammonia (NH₃) has a nitrogen atom with five valence electrons forming three single bonds with three hydrogen atoms, and one lone pair of electrons on nitrogen."},
+{title: "Item 119: 159. What is the acceleration of a 3000kg car acted upon by a net force of 7500 N?", content: "Using Newton’s Second Law: F = m × a, solve for acceleration (a = F/m).<br>a = 7500 N ÷ 3000 kg = 2.5 m/s²"},
+{title: "Item 120: 160. What is the mass of a brick if a force of 34.4 N accelerates the brick at 3.75 m/s²?", content: "Using Newton’s Second Law: F = m × a, solve for mass (m = F/a).<br>m = 34.4 N ÷ 3.75 m/s² = 9.17 kg"},
+{title: "Item 121: 161. What is the IMA of a ramp with an incline length of 15.6 m and a height of 3.0 m?", content: "Ideal Mechanical Advantage (IMA) = Length of incline ÷ Height of ramp.<br>IMA = 15.6 m ÷ 3.0 m = 5.2"},
+{title: "Item 122: 162. Convert 3200°K to °C.", content: "To convert from Kelvin to Celsius, subtract 273.15 from the Kelvin temperature.<br>°C = 3200 K − 273.15 = 2926.85 °C"},
+
+        ];
+        let currentCard = 0;
+        let showingAnswer = false;
+
+        function displayCard() {
+            const title = cards[currentCard].title;
+            const content = cards[currentCard].content;
+            document.getElementById("card-title").innerText = title;
+            document.getElementById("card-content").innerHTML = showingAnswer ? content : "Click 'Show Answer' to view.";
+        }
+
+        function toggleContent() {
+            showingAnswer = !showingAnswer;
+            displayCard();
+        }
+
+        function nextCard() {
+            if (currentCard < cards.length - 1) currentCard++;
+            showingAnswer = false;
+            displayCard();
+        }
+
+        function prevCard() {
+            if (currentCard > 0) currentCard--;
+            showingAnswer = false;
+            displayCard();
+        }
+
+        window.onload = displayCard;
+    </script>
+</body>
+</html>
